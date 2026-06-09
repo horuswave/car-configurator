@@ -14,7 +14,6 @@ import CarModel, { BodyColor, EnvMode } from "./CarModel";
 interface SceneProps {
   bodyColor: BodyColor;
   headlightsOn: boolean;
-  doorsOpen: boolean;
   envMode: EnvMode;
 }
 
@@ -204,7 +203,6 @@ const BG_COLORS = {
 export default function Scene({
   bodyColor,
   headlightsOn,
-  doorsOpen,
   envMode,
 }: SceneProps) {
   return (
@@ -242,7 +240,6 @@ export default function Scene({
         <CarModel
           bodyColor={bodyColor}
           headlightsOn={headlightsOn}
-          doorsOpen={doorsOpen}
           envMode={envMode}
         />
         <OrbitControls

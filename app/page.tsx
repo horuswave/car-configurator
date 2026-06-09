@@ -1,23 +1,21 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import dynamic from 'next/dynamic';
-import { BODY_COLORS, BodyColor, EnvMode } from './components/CarModel';
+import { useState } from "react";
+import dynamic from "next/dynamic";
+import { BODY_COLORS, BodyColor, EnvMode } from "./components/CarModel";
 
-const Scene = dynamic(() => import('./components/Scene'), { ssr: false });
+const Scene = dynamic(() => import("./components/Scene"), { ssr: false });
 
 const ENVS: { id: EnvMode; label: string; icon: string }[] = [
-  { id: 'showroom', label: 'Showroom', icon: '🏢' },
-  { id: 'outdoor',  label: 'Outdoor',  icon: '🌅' },
-  { id: 'night',    label: 'Night City', icon: '🌃' },
+  { id: "showroom", label: "No Environment", icon: "" },
+  { id: "outdoor", label: "Day Time", icon: "" },
+  { id: "night", label: "Night Time", icon: "" },
 ];
 
 export default function Configurator() {
   const [bodyColor, setBodyColor] = useState<BodyColor>(BODY_COLORS[0]);
   const [headlightsOn, setHeadlightsOn] = useState(false);
-  const [doorsOpen, setDoorsOpen] = useState(false);
-  const [spinWheels, setSpinWheels] = useState(true);
-  const [envMode, setEnvMode] = useState<EnvMode>('showroom');
+  const [envMode, setEnvMode] = useState<EnvMode>("showroom");
 
   return (
     <div className="configurator-root">
@@ -31,7 +29,10 @@ export default function Configurator() {
             </div>
           </div>
           <div className="header-center orbitron">
-            <span className="color-live" style={{ background: bodyColor.color }} />
+            <span
+              className="color-live"
+              style={{ background: bodyColor.color }}
+            />
             {bodyColor.name.toUpperCase()}
           </div>
           <div className="header-right">
@@ -45,8 +46,6 @@ export default function Configurator() {
         <Scene
           bodyColor={bodyColor}
           headlightsOn={headlightsOn}
-          doorsOpen={doorsOpen}
-          spinWheels={spinWheels}
           envMode={envMode}
         />
         <div className="canvas-hint">
@@ -64,7 +63,7 @@ export default function Configurator() {
           {BODY_COLORS.map((c) => (
             <button
               key={c.name}
-              className={`color-swatch ${bodyColor.name === c.name ? 'active' : ''}`}
+              className={`color-swatch ${bodyColor.name === c.name ? "active" : ""}`}
               onClick={() => setBodyColor(c)}
               title={c.name}
             >
@@ -90,7 +89,7 @@ export default function Configurator() {
           {ENVS.map((e) => (
             <button
               key={e.id}
-              className={`env-tab ${envMode === e.id ? 'active' : ''}`}
+              className={`env-tab ${envMode === e.id ? "active" : ""}`}
               onClick={() => setEnvMode(e.id)}
             >
               <span className="env-icon">{e.icon}</span>
@@ -102,13 +101,19 @@ export default function Configurator() {
         <div className="section-label orbitron">FEATURES</div>
         <div className="toggle-list">
           {[
-            { label: 'Headlights', sublabel: 'Dynamic shadows', value: headlightsOn, set: setHeadlightsOn, icon: '💡' },
-            { label: 'Doors',      sublabel: 'Open / Close',    value: doorsOpen,    set: setDoorsOpen,    icon: '🚪' },
-            { label: 'Wheels',     sublabel: 'Spin animation',  value: spinWheels,   set: setSpinWheels,   icon: '⟳' },
+            {
+              label: "Headlights",
+              sublabel: "Dynamic shadows",
+              value: headlightsOn,
+              set: setHeadlightsOn,
+              icon: "💡",
+            },
+          
+           
           ].map((item) => (
             <button
               key={item.label}
-              className={`toggle-row ${item.value ? 'on' : 'off'}`}
+              className={`toggle-row ${item.value ? "on" : "off"}`}
               onClick={() => item.set(!item.value)}
             >
               <div className="toggle-info">
@@ -125,13 +130,18 @@ export default function Configurator() {
           ))}
         </div>
 
-        <div className="section-label orbitron" style={{ marginTop: 'auto', paddingTop: '1rem' }}>SPECS</div>
+        <div
+          className="section-label orbitron"
+          style={{ marginTop: "auto", paddingTop: "1rem" }}
+        >
+          SPECS
+        </div>
         <div className="specs-list">
           {[
-            ['Engine', 'V8 Twin-Turbo'],
-            ['Power', '620 hp'],
-            ['0–100', '3.2 sec'],
-            ['Top Speed', '310 km/h'],
+            ["Engine", "V8 Twin-Turbo"],
+            ["Power", "620 hp"],
+            ["0–100", "3.2 sec"],
+            ["Top Speed", "310 km/h"],
           ].map(([k, v]) => (
             <div key={k} className="spec-row">
               <span className="spec-key">{k}</span>
@@ -167,22 +177,49 @@ export default function Configurator() {
           align-items: center;
           justify-content: space-between;
         }
-        .brand { display: flex; align-items: center; gap: 0.75rem; }
-        .brand-mark { font-size: 1.5rem; color: var(--accent); }
-        .brand-name { font-size: 1rem; font-weight: 700; letter-spacing: 0.2em; color: var(--accent); }
-        .brand-sub { font-size: 0.6rem; letter-spacing: 0.3em; color: var(--muted); font-family: 'Rajdhani', sans-serif; }
+        .brand {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
+        .brand-mark {
+          font-size: 1.5rem;
+          color: var(--accent);
+        }
+        .brand-name {
+          font-size: 1rem;
+          font-weight: 700;
+          letter-spacing: 0.2em;
+          color: var(--accent);
+        }
+        .brand-sub {
+          font-size: 0.6rem;
+          letter-spacing: 0.3em;
+          color: var(--muted);
+          font-family: "Rajdhani", sans-serif;
+        }
         .header-center {
-          display: flex; align-items: center; gap: 0.5rem;
-          font-size: 0.75rem; letter-spacing: 0.2em; color: var(--text);
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.75rem;
+          letter-spacing: 0.2em;
+          color: var(--text);
         }
         .color-live {
-          width: 12px; height: 12px; border-radius: 50%;
-          border: 1px solid rgba(255,255,255,0.3);
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 255, 255, 0.3);
           display: inline-block;
         }
-        .header-right { display: flex; gap: 0.5rem; }
+        .header-right {
+          display: flex;
+          gap: 0.5rem;
+        }
         .tag {
-          font-size: 0.6rem; letter-spacing: 0.15em;
+          font-size: 0.6rem;
+          letter-spacing: 0.15em;
           border: 1px solid var(--panel-border);
           color: var(--muted);
           padding: 0.2rem 0.5rem;
@@ -195,10 +232,13 @@ export default function Configurator() {
         }
         .canvas-hint {
           position: absolute;
-          bottom: 1rem; left: 50%;
+          bottom: 1rem;
+          left: 50%;
           transform: translateX(-50%);
-          display: flex; gap: 1.5rem;
-          font-size: 0.65rem; letter-spacing: 0.1em;
+          display: flex;
+          gap: 1.5rem;
+          font-size: 0.65rem;
+          letter-spacing: 0.1em;
           color: var(--muted);
           pointer-events: none;
         }
@@ -211,105 +251,211 @@ export default function Configurator() {
           flex-direction: column;
           gap: 1rem;
         }
-        .panel-left { grid-area: left; border-right: 1px solid var(--panel-border); }
-        .panel-right { grid-area: right; border-left: 1px solid var(--panel-border); }
+        .panel-left {
+          grid-area: left;
+          border-right: 1px solid var(--panel-border);
+        }
+        .panel-right {
+          grid-area: right;
+          border-left: 1px solid var(--panel-border);
+        }
         .panel-title {
-          font-size: 0.65rem; letter-spacing: 0.25em;
+          font-size: 0.65rem;
+          letter-spacing: 0.25em;
           color: var(--accent);
-          display: flex; align-items: center; gap: 0.5rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
           padding-bottom: 0.75rem;
           border-bottom: 1px solid var(--panel-border);
         }
-        .panel-icon { font-size: 0.9rem; }
+        .panel-icon {
+          font-size: 0.9rem;
+        }
         .section-label {
-          font-size: 0.55rem; letter-spacing: 0.3em;
+          font-size: 0.55rem;
+          letter-spacing: 0.3em;
           color: var(--muted);
           margin-top: 0.25rem;
         }
-        .color-grid { display: flex; flex-direction: column; gap: 0.4rem; }
+        .color-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+        }
         .color-swatch {
-          display: flex; align-items: center; gap: 0.6rem;
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
           background: transparent;
           border: 1px solid var(--panel-border);
           border-radius: 4px;
           padding: 0.5rem 0.65rem;
           cursor: pointer;
-          transition: border-color 0.2s, background 0.2s;
+          transition:
+            border-color 0.2s,
+            background 0.2s;
           text-align: left;
           width: 100%;
         }
-        .color-swatch:hover { border-color: var(--accent); background: rgba(0,212,255,0.04); }
-        .color-swatch.active { border-color: var(--accent); background: rgba(0,212,255,0.08); }
+        .color-swatch:hover {
+          border-color: var(--accent);
+          background: rgba(0, 212, 255, 0.04);
+        }
+        .color-swatch.active {
+          border-color: var(--accent);
+          background: rgba(0, 212, 255, 0.08);
+        }
         .swatch-dot {
-          width: 20px; height: 20px; border-radius: 50%;
-          border: 1px solid rgba(255,255,255,0.15);
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 255, 255, 0.15);
           flex-shrink: 0;
         }
-        .swatch-label { font-size: 0.8rem; color: var(--text); flex: 1; }
+        .swatch-label {
+          font-size: 0.8rem;
+          color: var(--text);
+          flex: 1;
+        }
         .swatch-props {
-          display: flex; flex-direction: column; align-items: flex-end;
-          font-size: 0.55rem; color: var(--muted); letter-spacing: 0.05em;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          font-size: 0.55rem;
+          color: var(--muted);
+          letter-spacing: 0.05em;
           gap: 1px;
         }
-        .env-tabs { display: flex; flex-direction: column; gap: 0.4rem; }
+        .env-tabs {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+        }
         .env-tab {
-          display: flex; align-items: center; gap: 0.6rem;
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
           background: transparent;
           border: 1px solid var(--panel-border);
           border-radius: 4px;
           padding: 0.5rem 0.75rem;
           cursor: pointer;
           color: var(--muted);
-          font-family: 'Rajdhani', sans-serif;
+          font-family: "Rajdhani", sans-serif;
           font-size: 0.85rem;
           transition: all 0.2s;
         }
-        .env-tab:hover { border-color: var(--accent); color: var(--text); }
-        .env-tab.active { border-color: var(--accent); background: rgba(0,212,255,0.08); color: var(--accent); }
-        .env-icon { font-size: 1rem; }
-        .toggle-list { display: flex; flex-direction: column; gap: 0.4rem; }
+        .env-tab:hover {
+          border-color: var(--accent);
+          color: var(--text);
+        }
+        .env-tab.active {
+          border-color: var(--accent);
+          background: rgba(0, 212, 255, 0.08);
+          color: var(--accent);
+        }
+        .env-icon {
+          font-size: 1rem;
+        }
+        .toggle-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+        }
         .toggle-row {
-          display: flex; align-items: center; justify-content: space-between;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
           background: transparent;
           border: 1px solid var(--panel-border);
           border-radius: 4px;
           padding: 0.55rem 0.75rem;
           cursor: pointer;
-          transition: border-color 0.2s, background 0.2s;
+          transition:
+            border-color 0.2s,
+            background 0.2s;
           width: 100%;
         }
-        .toggle-row:hover { border-color: var(--accent); }
-        .toggle-row.on { border-color: var(--accent); background: rgba(0,212,255,0.06); }
-        .toggle-info { display: flex; align-items: center; gap: 0.6rem; text-align: left; }
-        .toggle-icon { font-size: 1rem; width: 1.2rem; text-align: center; }
-        .toggle-label { font-size: 0.82rem; color: var(--text); }
-        .toggle-sub { font-size: 0.6rem; color: var(--muted); }
+        .toggle-row:hover {
+          border-color: var(--accent);
+        }
+        .toggle-row.on {
+          border-color: var(--accent);
+          background: rgba(0, 212, 255, 0.06);
+        }
+        .toggle-info {
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          text-align: left;
+        }
+        .toggle-icon {
+          font-size: 1rem;
+          width: 1.2rem;
+          text-align: center;
+        }
+        .toggle-label {
+          font-size: 0.82rem;
+          color: var(--text);
+        }
+        .toggle-sub {
+          font-size: 0.6rem;
+          color: var(--muted);
+        }
         .toggle-pill {
-          width: 32px; height: 16px;
+          width: 32px;
+          height: 16px;
           border-radius: 8px;
           border: 1px solid var(--muted);
           background: transparent;
           position: relative;
-          transition: background 0.2s, border-color 0.2s;
+          transition:
+            background 0.2s,
+            border-color 0.2s;
           flex-shrink: 0;
         }
-        .toggle-row.on .toggle-pill { background: var(--accent); border-color: var(--accent); }
-        .toggle-knob {
-          position: absolute; top: 2px; left: 2px;
-          width: 10px; height: 10px; border-radius: 50%;
-          background: var(--muted);
-          transition: transform 0.2s, background 0.2s;
+        .toggle-row.on .toggle-pill {
+          background: var(--accent);
+          border-color: var(--accent);
         }
-        .toggle-row.on .toggle-knob { transform: translateX(16px); background: var(--bg); }
-        .specs-list { display: flex; flex-direction: column; gap: 0.3rem; }
+        .toggle-knob {
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: var(--muted);
+          transition:
+            transform 0.2s,
+            background 0.2s;
+        }
+        .toggle-row.on .toggle-knob {
+          transform: translateX(16px);
+          background: var(--bg);
+        }
+        .specs-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
+        }
         .spec-row {
-          display: flex; justify-content: space-between; align-items: center;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
           padding: 0.3rem 0;
           border-bottom: 1px solid var(--panel-border);
           font-size: 0.75rem;
         }
-        .spec-key { color: var(--muted); }
-        .spec-val { color: var(--accent); font-size: 0.7rem; letter-spacing: 0.1em; }
+        .spec-key {
+          color: var(--muted);
+        }
+        .spec-val {
+          color: var(--accent);
+          font-size: 0.7rem;
+          letter-spacing: 0.1em;
+        }
       `}</style>
     </div>
   );

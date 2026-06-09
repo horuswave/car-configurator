@@ -26,7 +26,6 @@ export type EnvMode = "showroom" | "outdoor" | "night";
 interface CarModelProps {
   bodyColor: BodyColor;
   headlightsOn: boolean;
-  doorsOpen: boolean;
   envMode: EnvMode;
   wheelSpeed?: number;
 }
@@ -85,7 +84,6 @@ const OFFSET_Z = 4.86 * SCALE;
 export default function CarModel({
   bodyColor,
   headlightsOn,
-  doorsOpen,
   envMode,
   wheelSpeed = 0,
 }: CarModelProps) {
